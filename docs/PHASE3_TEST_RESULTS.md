@@ -144,8 +144,9 @@ python -m scripts.phase3_profile --output results/reprofile --sizes 1 10 100 102
 
 The profiling command returns nonzero if any worker times out. Retain failures.
 Exact cloud commands and development sequence are in `results/phase3/commands.txt`.
-Compilation, CLI without optional site packages, script help and `git diff --check`
-also ran. macOS validation script help is not macOS execution.
+Compilation, CLI without optional site packages and script help passed.
+The source/test/script/documentation `git diff --check` passed; the whole-PR
+check flags expected traceback whitespace in preserved raw pytest logs. macOS validation script help is not macOS execution.
 
 ## Untested / remaining
 

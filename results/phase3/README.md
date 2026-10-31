@@ -25,3 +25,7 @@ Read `docs/PHASE3_TEST_RESULTS.md` and `docs/FINAL_READINESS.md` for interpretat
 probe: exit 1 was expected and the parent-owned temp directory was empty afterwards.
 These induced harness failures are not included in the 90 benchmark trials or in
 pytest's final failure count.
+
+Raw pytest logs retain their original traceback whitespace. A whole-PR whitespace
+check reports those artifact lines; the separate source/test/script/documentation
+whitespace check passes. Logs were not rewritten to make that check silent.

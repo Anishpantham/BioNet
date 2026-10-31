@@ -1,0 +1,60 @@
+[
+  {
+    "scenario": "Reliable transfer",
+    "sender": {
+      "bytes_transmitted": 271777,
+      "bytes_received": 9325,
+      "application_overhead_bytes": 18814,
+      "total_packets": 257,
+      "acknowledged_packets": 257,
+      "session": "925014bf3363430ba76df6370c954dcc",
+      "filename": "synthetic.zip",
+      "size": 262288,
+      "seconds": 0.21110157699996535,
+      "goodput_mbps": 9.939783633167005,
+      "packets_transmitted": 259,
+      "retransmissions": 0,
+      "simulated_drops": 0,
+      "success": true,
+      "sha256": true
+    },
+    "receiver": {
+      "session": "925014bf3363430ba76df6370c954dcc",
+      "filename": "synthetic.zip",
+      "sha256": "PASS",
+      "simulated_drops": 0,
+      "out_of_order": 0,
+      "bytes_written": 262288
+    },
+    "independent_sha256": true
+  },
+  {
+    "scenario": "Loss and reordering",
+    "sender": {
+      "bytes_transmitted": 296157,
+      "bytes_received": 9325,
+      "application_overhead_bytes": 43194,
+      "total_packets": 257,
+      "acknowledged_packets": 257,
+      "session": "9ec58e232f174de3865376992830c81d",
+      "filename": "synthetic.zip",
+      "size": 262288,
+      "seconds": 3.5054702080000197,
+      "goodput_mbps": 0.5985798981293149,
+      "packets_transmitted": 282,
+      "retransmissions": 61,
+      "simulated_drops": 38,
+      "success": true,
+      "sha256": true
+    },
+    "receiver": {
+      "session": "9ec58e232f174de3865376992830c81d",
+      "filename": "synthetic.zip",
+      "sha256": "PASS",
+      "simulated_drops": 23,
+      "out_of_order": 147,
+      "bytes_written": 262288
+    },
+    "independent_sha256": true
+  }
+]

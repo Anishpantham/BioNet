@@ -48,3 +48,19 @@ resetting progress. Duplicate FIN resends FIN_ACK for 120 seconds. Retry budgets
 must fit this retention period; very long custom timeouts may cause ambiguous
 completion. No crash recovery, encryption, authentication, congestion control,
 IPv6, or resumable transfers. CRC is not a security primitive.
+
+## Phase 2 compatibility and counters
+
+The v1 packet bytes and control handshake are unchanged. Both endpoints explicitly
+reject files above 1 TiB. Even with a one-byte chunk this is at most 2^40 packets,
+well below the unsigned 64-bit sequence space. Encoding rejects out-of-range
+sequence values before packing. Empty files still use START/FIN with no DATA.
+The receiver's SHA-256 is updated in reconstructed order while writing, never in
+arrival order. A FIN_ACK still means size/hash validation and publication succeeded.
+
+Simulator `packets_sent` and `bytes_sent` increment only on actual socket sends,
+excluding intentional drops and datagrams still queued. Sender received bytes
+count CRC-valid replies from its peer/session (including duplicate replies).
+Receiver monitoring counts accepted-session datagrams, excluding unrelated traffic;
+it does not estimate unseen sender drops. Retransmissions include DATA and control
+retries. TCP packet/retransmission counts are unavailable at the application layer.

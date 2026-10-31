@@ -224,3 +224,6 @@ data/
 received/
 *.part
 *.zip
+
+# Local Phase 2 scratch work
+work/

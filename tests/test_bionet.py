@@ -1,4 +1,4 @@
-import os
+import random
 import queue
 import threading
 import time
@@ -20,7 +20,7 @@ def test_bad_packet(raw):
 @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
 @pytest.mark.parametrize('loss', [0, .2])
 def test_udp(tmp_path, size, loss):
-    source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+    source = tmp_path/'file.bin'; source.write_bytes(random.Random(42).randbytes(size))
     stop = threading.Event(); ports = queue.Queue()
     thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
     thread.start()
@@ -41,7 +41,7 @@ def test_retry_exhaustion(tmp_path):
         sender.send(file, port=1, retries=1, timeout=.01, loss=1)
 
 def test_tcp(tmp_path):
-    source = tmp_path/'binary'; source.write_bytes(os.urandom(100000))
+    source = tmp_path/'binary'; source.write_bytes(random.Random(42).randbytes(100000))
     stop = threading.Event(); ports = queue.Queue()
     thread = threading.Thread(target=tcp_baseline.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put))
     thread.start()
@@ -113,7 +113,7 @@ def test_sequential_transfers(tmp_path):
     try:
         port = ports.get(timeout=3)
         for name in ('first', 'second'):
-            source = tmp_path/name; source.write_bytes(os.urandom(10000))
+            source = tmp_path/name; source.write_bytes(random.Random(42).randbytes(10000))
             assert sender.send(source, port=port)['success']
             assert source.read_bytes() == (tmp_path/'out'/name).read_bytes()
     finally:

@@ -1,0 +1,475 @@
+.F.FF..FFFFFFFFFFFFFF                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_metadata_bounded_parser[payload1] ____________________
+
+payload = b'{"filename": "safe.bin", "size": 0, "chunk": 1024, "count": 0, "window": 8, "sha256": "e3b0c44298fc1c149afbf4c8996fb...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}'
+
+    @pytest.mark.parametrize('payload', [b'['*1100+b']', meta(extra='x'*1200)])
+    def test_metadata_bounded_parser(payload):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:33: Failed
+___________________________ test_sequence_type[True] ___________________________
+
+seq = True
+
+    @pytest.mark.parametrize('seq', [True, 1.5, -1, 1 << 64])
+    def test_sequence_type(seq):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:47: Failed
+___________________________ test_sequence_type[1.5] ____________________________
+
+seq = 1.5
+
+    @pytest.mark.parametrize('seq', [True, 1.5, -1, 1 << 64])
+    def test_sequence_type(seq):
+        with pytest.raises(ValueError):
+>           encode(DATA, bytes(16), seq)
+
+tests/test_phase3_regressions.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = 3
+session = b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+seq = 1.5, payload = b''
+
+    def encode(kind, session, seq=0, payload=b''):
+        if not 0 <= seq <= MAX_SEQUENCE or len(payload) > 1200 or len(session) != 16 or kind not in range(1, 8):
+            raise ValueError('invalid packet')
+>       body = HEADER.pack(b'BNET', 1, kind, session, seq, len(payload)) + payload
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       struct.error: required argument is not an integer
+
+bionet/protocol.py:12: error
+______________________ test_finite_scheduler[nan-latency] ______________________
+
+field = 'latency', value = nan
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:55: Failed
+______________________ test_finite_scheduler[nan-jitter] _______________________
+
+field = 'jitter', value = nan
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:55: Failed
+______________________ test_finite_scheduler[inf-latency] ______________________
+
+field = 'latency', value = inf
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:55: Failed
+______________________ test_finite_scheduler[inf-jitter] _______________________
+
+field = 'jitter', value = inf
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:55: Failed
+__________ test_sender_rejects_invalid_limits_before_io[timeout-nan] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li0')
+field = 'timeout', value = nan
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li0/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li0/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+__________ test_sender_rejects_invalid_limits_before_io[timeout-inf] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li1')
+field = 'timeout', value = inf
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li1/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li1/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+________ test_sender_rejects_invalid_limits_before_io[window_size-1.5] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li2')
+field = 'window_size', value = 1.5
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li2/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li2/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+__________ test_sender_rejects_invalid_limits_before_io[retries-1.5] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li3')
+field = 'retries', value = 1.5
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li3/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-2/test_sender_rejects_invalid_li3/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+_______________ test_udp_disk_write_failure_keeps_service_alive ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_udp_disk_write_failure_ke0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fae46775a90>
+
+    def test_udp_disk_write_failure_keeps_service_alive(tmp_path, monkeypatch):
+        original = Path.open
+        class FailingWriter:
+            def __init__(self, stream): self.stream = stream
+            def write(self, data): raise OSError('injected ENOSPC')
+            def close(self): self.stream.close()
+            @property
+            def closed(self): return self.stream.closed
+        def opened(path, mode='r', *args, **kwargs):
+            stream = original(path, mode, *args, **kwargs)
+            return FailingWriter(stream) if mode == 'xb' and path.suffix == '.part' else stream
+        monkeypatch.setattr(Path, 'open', opened)
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sid = bytes(16)
+            sock.send(encode(START, sid, payload=meta(b'x')))
+            assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(DATA, sid, payload=b'x'))
+            # An ACK can precede the error; publication must never be confirmed.
+            answer = decode(sock.recv(2048))
+>           if answer[0] == ACK: answer = decode(sock.recv(2048))
+                                                 ^^^^^^^^^^^^^^^
+E           TimeoutError: timed out
+
+tests/test_phase3_regressions.py:85: TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_udp_disk_write_failure_ke0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fae46775a90>
+
+    def test_udp_disk_write_failure_keeps_service_alive(tmp_path, monkeypatch):
+        original = Path.open
+        class FailingWriter:
+            def __init__(self, stream): self.stream = stream
+            def write(self, data): raise OSError('injected ENOSPC')
+            def close(self): self.stream.close()
+            @property
+            def closed(self): return self.stream.closed
+        def opened(path, mode='r', *args, **kwargs):
+            stream = original(path, mode, *args, **kwargs)
+            return FailingWriter(stream) if mode == 'xb' and path.suffix == '.part' else stream
+        monkeypatch.setattr(Path, 'open', opened)
+>       with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase3_regressions.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:158: in __exit__
+    self.gen.throw(value)
+bionet/benchmark.py:51: in local_receiver
+    raise errors.get()
+bionet/benchmark.py:33: in serve
+    receive(port=0, output=output, stop=stop, ready=ports.put, **options)
+bionet/receiver.py:103: in receive
+    stream.write(data); hasher.update(data); written += len(data); base += 1
+    ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_phase3_regressions.test_udp_disk_write_failure_keeps_service_alive.<locals>.FailingWriter object at 0x7fae46775640>
+data = b'x'
+
+>   def write(self, data): raise OSError('injected ENOSPC')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: injected ENOSPC
+
+tests/test_phase3_regressions.py:70: OSError
+___________________ test_tcp_does_not_delete_unowned_partial ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_tcp_does_not_delete_unown0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fae46774b60>
+
+    def test_tcp_does_not_delete_unowned_partial(tmp_path, monkeypatch):
+        fixed = uuid.UUID(int=0)
+        monkeypatch.setattr(tcp_baseline.uuid, 'uuid4', lambda: fixed)
+        partial = tmp_path/('.'+fixed.hex+'.part'); partial.write_bytes(b'preexisting')
+        with local_receiver('tcp', tmp_path) as port:
+            with socket.create_connection(('127.0.0.1', port), timeout=1) as sock:
+                payload = meta(); sock.sendall(struct.pack('!I', len(payload))+payload)
+                assert tcp_baseline.exact(sock, 4) == b'FAIL'
+>       assert partial.read_bytes() == b'preexisting'
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase3_regressions.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-2/test_tcp_does_not_delete_unown0/.00000000000000000000000000000000.part')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-2/test_tcp_does_not_delete_unown0/.00000000000000000000000000000000.part'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_____________________ test_deep_metadata_does_not_kill_tcp _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_deep_metadata_does_not_ki1')
+
+    def test_deep_metadata_does_not_kill_tcp(tmp_path):
+        with local_receiver('tcp', tmp_path) as port:
+            with socket.create_connection(('127.0.0.1', port), timeout=1) as sock:
+                payload = b'['*1100+b']'
+                sock.sendall(struct.pack('!I', len(payload))+payload)
+                assert tcp_baseline.exact(sock, 4) == b'FAIL'
+            source = tmp_path/'source'; source.touch()
+>           assert tcp_baseline.send(source, port=port)['success']
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase3_regressions.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = PosixPath('/tmp/pytest-of-agent/pytest-2/test_deep_metadata_does_not_ki1/source')
+host = '127.0.0.1', port = 37005
+
+    def send(file, host='127.0.0.1', port=9001):
+        path = Path(file); size = path.stat().st_size
+        if size > MAX_FILE_SIZE:
+            raise ValueError('file exceeds supported 1 TiB limit')
+        m = dict(filename=path.name, size=size, chunk=1024, count=(size+1023)//1024, window=1, sha256=digest(path))
+        payload = json.dumps(m).encode(); start = time.monotonic()
+        with socket.create_connection((host, port), timeout=30) as sock, path.open('rb') as stream:
+            sock.sendall(struct.pack('!I', len(payload)) + payload)
+            remaining = size
+            while remaining:
+                chunk = stream.read(min(65536, remaining))
+                if not chunk:
+                    raise OSError('source shortened during transfer')
+                sock.sendall(chunk); remaining -= len(chunk)
+            if exact(sock, 4) != b'PASS':
+>               raise RuntimeError('receiver rejected file')
+E               RuntimeError: receiver rejected file
+
+bionet/tcp_baseline.py:37: RuntimeError
+______________ test_udp_releases_temp_ownership_after_completion _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_udp_releases_temp_ownersh0')
+
+    def test_udp_releases_temp_ownership_after_completion(tmp_path):
+        sid = bytes(16)
+        partial = tmp_path/('.'+sid.hex()+'.part')
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sock.send(encode(START, sid, payload=meta()))
+            assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(FIN, sid)); assert decode(sock.recv(2048))[0] == FIN_ACK
+            partial.write_bytes(b'new owner')
+>       assert partial.read_bytes() == b'new owner'
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase3_regressions.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-2/test_udp_releases_temp_ownersh0/.00000000000000000000000000000000.part')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-2/test_udp_releases_temp_ownersh0/.00000000000000000000000000000000.part'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+___________________ test_nonzero_control_sequence_ignored[1] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_nonzero_control_sequence_0')
+kind = 1
+
+    @pytest.mark.parametrize('kind', [START, FIN])
+    def test_nonzero_control_sequence_ignored(tmp_path, kind):
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sid = bytes(16)
+            if kind == FIN:
+                sock.send(encode(START, sid, payload=meta()))
+                assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(kind, sid, seq=99, payload=meta() if kind == START else b''))
+>           with pytest.raises(socket.timeout): sock.recv(2048)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE TimeoutError
+
+tests/test_phase3_regressions.py:132: Failed
+___________________ test_nonzero_control_sequence_ignored[5] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_nonzero_control_sequence_1')
+kind = 5
+
+    @pytest.mark.parametrize('kind', [START, FIN])
+    def test_nonzero_control_sequence_ignored(tmp_path, kind):
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sid = bytes(16)
+            if kind == FIN:
+                sock.send(encode(START, sid, payload=meta()))
+                assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(kind, sid, seq=99, payload=meta() if kind == START else b''))
+>           with pytest.raises(socket.timeout): sock.recv(2048)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE TimeoutError
+
+tests/test_phase3_regressions.py:132: Failed
+=============================== warnings summary ===============================
+../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14
+  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_phase3_regressions.py::test_metadata_bounded_parser[payload1]
+FAILED tests/test_phase3_regressions.py::test_sequence_type[True] - Failed: D...
+FAILED tests/test_phase3_regressions.py::test_sequence_type[1.5] - struct.err...
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[nan-latency]
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[nan-jitter] - ...
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[inf-latency]
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[inf-jitter] - ...
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[timeout-nan]
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[timeout-inf]
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[window_size-1.5]
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[retries-1.5]
+FAILED tests/test_phase3_regressions.py::test_udp_disk_write_failure_keeps_service_alive
+FAILED tests/test_phase3_regressions.py::test_tcp_does_not_delete_unowned_partial
+FAILED tests/test_phase3_regressions.py::test_deep_metadata_does_not_kill_tcp
+FAILED tests/test_phase3_regressions.py::test_udp_releases_temp_ownership_after_completion
+FAILED tests/test_phase3_regressions.py::test_nonzero_control_sequence_ignored[1]
+FAILED tests/test_phase3_regressions.py::test_nonzero_control_sequence_ignored[5]
+17 failed, 4 passed, 1 warning in 0.60s

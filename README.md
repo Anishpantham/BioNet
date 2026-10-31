@@ -101,3 +101,23 @@ Matplotlib. Existing output CSVs are never overwritten. Default output is now
 
 See [review](docs/PHASE2_REVIEW.md), [demo guide](docs/DEMO_GUIDE.md),
 [submission checklist](docs/SUBMISSION_CHECKLIST.md) and [Phase 2 validation](docs/PHASE2_VALIDATION.md).
+
+## Phase 3: stabilization and evidence
+
+See [audit](docs/PHASE3_AUDIT.md), [test and measurement results](docs/PHASE3_TEST_RESULTS.md),
+[bug fixes](docs/PHASE3_BUG_FIXES.md), [readiness](docs/FINAL_READINESS.md) and
+[local macOS validation](docs/MACOS_VALIDATION.md). Raw evidence is in
+`results/phase3/`; previous phase results remain historical evidence.
+
+```sh
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q -ra
+python -m scripts.phase3_profile --output results/new-profile --sizes 1 10 100
+# Run only on the Mac; synthetic data, never the real ZIP:
+python -m scripts.validate_macos --output results/macos-local
+```
+
+Plugin autoload is disabled only to isolate unrelated preinstalled pytest plugins;
+BioNet's suite has no external pytest plugin dependency. Memory profiling uses
+tracemalloc across both endpoints and hashes; it excludes kernel/native memory
+and changes timing. Each profiling transfer has a bounded timeout and records
+failure. Interactive macOS/LAN evaluation remains required before submission.

@@ -1,0 +1,52 @@
+# Working directory: /workspace/BioNet. Commands used .venv Python 3.12.14.
+# Shell networking requires the executor's network-enabled permission profile.
+# Initial discovery attempted git fetch origin main without socket permission; it failed.
+# Current main was imported using GitHub connector files/trees/commit; all Git hashes verified.
+# Initial dependency install without socket access failed; network-enabled install succeeded:
+PIP_CACHE_DIR=/workspace/work/pip-cache .venv/bin/python -m pip install rich
+
+# Original suite: first without sockets (failed), then network-enabled (45 passed):
+.venv/bin/python -m pytest -q -ra > results/phase3/baseline-tests.log 2>&1
+.venv/bin/python -m pytest -q -ra > results/phase3/baseline-network-tests.log 2>&1
+
+# Regression development before fixes (initial fixture then corrected fixture):
+.venv/bin/python -m pytest -q -ra tests/test_phase3_regressions.py > results/phase3/regressions-before.log 2>&1
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q -ra tests/test_phase3_regressions.py > results/phase3/regressions-before-confirmed.log 2>&1
+# After fixes:
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q -ra tests/test_phase3_regressions.py > results/phase3/regressions-after.log 2>&1
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q -ra tests/test_phase3.py > results/phase3/expanded-tests.log 2>&1
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q -ra --junitxml=results/phase3/full-tests.xml > results/phase3/full-tests.log 2>&1
+
+# Actual profile run: 1 GiB UDP timed out; return code 1 intentionally reports that failure.
+MPLCONFIGDIR=/workspace/work/matplotlib .venv/bin/python -m scripts.phase3_profile --output results/phase3/profile --sizes 1 10 100 1024 --timeout 240 > results/phase3/profile.log 2>&1
+# During harness development its timeout worker temp directory was not parent-owned;
+# /tmp/tmpcek832co (observed synthetic 1 GiB source/partial) was explicitly removed.
+# Final harness places worker temps inside parent-owned TemporaryDirectory for timeout cleanup.
+
+# Independent benchmark run:
+MPLCONFIGDIR=/workspace/work/matplotlib .venv/bin/python -m bionet benchmark --output results/phase3/benchmark --sizes 16384 65536 --windows 8 32 --losses 0 .05 .1 .2 .3 .4 --trials 3 > results/phase3/benchmark.log 2>&1
+
+# Static and entry-point checks:
+.venv/bin/python -m compileall -q bionet scripts tests
+.venv/bin/python -S -m bionet --help > results/phase3/cli-no-optional-deps.log
+.venv/bin/python -m scripts.validate_macos --help > results/phase3/macos-script-help.log
+git diff --check
+
+# Final full-suite rerun after repeated-START regression was added:
+cp results/phase3/full-tests.log results/phase3/full-tests-intermediate.log
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q -ra --junitxml=results/phase3/full-tests.xml > results/phase3/full-tests.log 2>&1
+
+# Untraced GiB check (executed by a subprocess.run parent with timeout=180):
+# --output was a result.json inside a parent-owned TemporaryDirectory; the result
+# was copied to results/phase3/gib-untraced.json after worker completion.
+.venv/bin/python -m scripts.phase3_profile --worker --sizes 1024 --protocol udp --window-size 32 --output /tmp/PARENT_OWNED_TEMP/result.json
+
+# Forced-timeout cleanup check (subprocess.run timeout=30 around the harness):
+# TMPDIR pointed to an empty directory within a parent TemporaryDirectory.
+.venv/bin/python -m scripts.phase3_profile --output /workspace/work/TEMP/evidence --sizes 1 --timeout .2
+# Expected exit 1; 6 timed-out workers; TMPDIR empty afterwards. Machine-readable
+# actual argv/status is in profile-timeout-cleanup.json. These are intentional
+# harness timeout probes, not six protocol failures or pytest failures.
+
+# Memory graph regenerated from existing measurements.csv via plot_memory(root, rows)
+# after adding failure disclosure and a logarithmic file-size axis. No data changed.

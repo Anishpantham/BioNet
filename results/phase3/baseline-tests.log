@@ -1,0 +1,1700 @@
+...........FFFFFFFFFFFF.......FFFFFFFF.FFFF.F                            [100%]
+=================================== FAILURES ===================================
+________________________________ test_udp[0-0] _________________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_0_0'), size = 0
+loss = 0
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced9163410>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+________________________________ test_udp[0-1] _________________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_1_0'), size = 1
+loss = 0
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced9183470>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+_______________________________ test_udp[0-1024] _______________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_1024_0')
+size = 1024, loss = 0
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d25370>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+_______________________________ test_udp[0-1025] _______________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_1025_0')
+size = 1025, loss = 0
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d25cd0>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+_____________________________ test_udp[0-1048576] ______________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_1048576_0')
+size = 1048576, loss = 0
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d269c0>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+_______________________________ test_udp[0.2-0] ________________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_2_0_0'), size = 0
+loss = 0.2
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced9183410>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+_______________________________ test_udp[0.2-1] ________________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_2_1_0'), size = 1
+loss = 0.2
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced917b740>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+______________________________ test_udp[0.2-1024] ______________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_2_1024_0')
+size = 1024, loss = 0.2
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d27d40>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+______________________________ test_udp[0.2-1025] ______________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_2_1025_0')
+size = 1025, loss = 0.2
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d27a70>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+____________________________ test_udp[0.2-1048576] _____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_udp_0_2_1048576_0')
+size = 1048576, loss = 0.2
+
+    @pytest.mark.parametrize('size', [0, 1, 1024, 1025, 1048576])
+    @pytest.mark.parametrize('loss', [0, .2])
+    def test_udp(tmp_path, size, loss):
+        source = tmp_path/'file.bin'; source.write_bytes(os.urandom(size))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put, loss=loss, reorder=.2, seed=7, window_size=8))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d26c30>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+____________________________ test_retry_exhaustion _____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_retry_exhaustion0')
+
+    def test_retry_exhaustion(tmp_path):
+        file = tmp_path/'empty'; file.touch()
+        with pytest.raises(TimeoutError):
+>           sender.send(file, port=1, retries=1, timeout=.01, loss=1)
+
+tests/test_bionet.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:21: in send
+    with Dashboard(dashboard) as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_DGRAM: 2>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+___________________________________ test_tcp ___________________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_tcp0')
+
+    def test_tcp(tmp_path):
+        source = tmp_path/'binary'; source.write_bytes(os.urandom(100000))
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=tcp_baseline.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put))
+        thread.start()
+        try:
+>           assert tcp_baseline.send(source, port=ports.get(timeout=3))['sha256']
+                                                  ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d27050>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+____________________________ test_lost_controls[1] _____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_lost_controls_1_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fced8d261b0>
+dropped_kind = 1
+
+    @pytest.mark.parametrize('dropped_kind', [START, START_ACK, FIN, FIN_ACK])
+    def test_lost_controls(tmp_path, monkeypatch, dropped_kind):
+        from bionet.impairment import Channel
+        original = Channel.send; dropped = []
+        def send(self, packet, address):
+            if decode(packet)[0] == dropped_kind and not dropped:
+                dropped.append(True)
+                return
+            original(self, packet, address)
+        monkeypatch.setattr(Channel, 'send', send)
+>       test_udp(tmp_path, 2048, 0)
+
+tests/test_bionet.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_bionet.py:28: in test_udp
+    port = ports.get(timeout=3)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d27aa0>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+____________________________ test_lost_controls[2] _____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_lost_controls_2_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fced8d2a690>
+dropped_kind = 2
+
+    @pytest.mark.parametrize('dropped_kind', [START, START_ACK, FIN, FIN_ACK])
+    def test_lost_controls(tmp_path, monkeypatch, dropped_kind):
+        from bionet.impairment import Channel
+        original = Channel.send; dropped = []
+        def send(self, packet, address):
+            if decode(packet)[0] == dropped_kind and not dropped:
+                dropped.append(True)
+                return
+            original(self, packet, address)
+        monkeypatch.setattr(Channel, 'send', send)
+>       test_udp(tmp_path, 2048, 0)
+
+tests/test_bionet.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_bionet.py:28: in test_udp
+    port = ports.get(timeout=3)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d28890>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+____________________________ test_lost_controls[5] _____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_lost_controls_5_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fced8d29400>
+dropped_kind = 5
+
+    @pytest.mark.parametrize('dropped_kind', [START, START_ACK, FIN, FIN_ACK])
+    def test_lost_controls(tmp_path, monkeypatch, dropped_kind):
+        from bionet.impairment import Channel
+        original = Channel.send; dropped = []
+        def send(self, packet, address):
+            if decode(packet)[0] == dropped_kind and not dropped:
+                dropped.append(True)
+                return
+            original(self, packet, address)
+        monkeypatch.setattr(Channel, 'send', send)
+>       test_udp(tmp_path, 2048, 0)
+
+tests/test_bionet.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_bionet.py:28: in test_udp
+    port = ports.get(timeout=3)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d2b890>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+____________________________ test_lost_controls[6] _____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_lost_controls_6_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fced8d2bf80>
+dropped_kind = 6
+
+    @pytest.mark.parametrize('dropped_kind', [START, START_ACK, FIN, FIN_ACK])
+    def test_lost_controls(tmp_path, monkeypatch, dropped_kind):
+        from bionet.impairment import Channel
+        original = Channel.send; dropped = []
+        def send(self, packet, address):
+            if decode(packet)[0] == dropped_kind and not dropped:
+                dropped.append(True)
+                return
+            original(self, packet, address)
+        monkeypatch.setattr(Channel, 'send', send)
+>       test_udp(tmp_path, 2048, 0)
+
+tests/test_bionet.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_bionet.py:28: in test_udp
+    port = ports.get(timeout=3)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8db40e0>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+_____________________________ test_duplicate_data ______________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_duplicate_data0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fced8db4bf0>
+
+    def test_duplicate_data(tmp_path, monkeypatch):
+        from bionet.impairment import Channel
+        original = Channel.send
+        def send(self, packet, address):
+            original(self, packet, address)
+            if decode(packet)[0] in (DATA, ACK):
+                original(self, packet, address)
+        monkeypatch.setattr(Channel, 'send', send)
+>       test_udp(tmp_path, 8192, 0)
+
+tests/test_bionet.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_bionet.py:28: in test_udp
+    port = ports.get(timeout=3)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8db43e0>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+___________________ test_interrupted_and_hash_failure[False] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_interrupted_and_hash_fail0')
+mismatch = False
+
+    @pytest.mark.parametrize('mismatch', [False, True])
+    def test_interrupted_and_hash_failure(tmp_path, mismatch):
+        import json
+        import socket
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path, stop=stop, ready=ports.put, idle_timeout=.05))
+        thread.start()
+        try:
+>           with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_DGRAM: 2>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+___________________ test_interrupted_and_hash_failure[True] ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_interrupted_and_hash_fail1')
+mismatch = True
+
+    @pytest.mark.parametrize('mismatch', [False, True])
+    def test_interrupted_and_hash_failure(tmp_path, mismatch):
+        import json
+        import socket
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path, stop=stop, ready=ports.put, idle_timeout=.05))
+        thread.start()
+        try:
+>           with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_DGRAM: 2>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+__________________________ test_sequential_transfers ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_sequential_transfers0')
+
+    def test_sequential_transfers(tmp_path):
+        stop = threading.Event(); ports = queue.Queue()
+        thread = threading.Thread(target=receiver.receive, kwargs=dict(port=0, output=tmp_path/'out', stop=stop, ready=ports.put))
+        thread.start()
+        try:
+>           port = ports.get(timeout=3)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_bionet.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8d26e40>, block = True, timeout = 3
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+__________________________ test_actual_wire_counters ___________________________
+
+    def test_actual_wire_counters():
+>       with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase2.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_DGRAM: 2>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+___________________________ test_dashboard_transfer ____________________________
+
+protocol = 'udp'
+output = PosixPath('/tmp/pytest-of-agent/pytest-0/test_dashboard_transfer0/out')
+options = {'window_size': 8, 'dashboard': True, 'on_complete': <built-in method append of list object at 0x7fced9177940>}
+
+    @contextmanager
+    def local_receiver(protocol, output, **options):
+        stop = threading.Event(); ports = queue.Queue(); errors = queue.Queue()
+        receive = receiver.receive if protocol == 'udp' else tcp_baseline.receive
+        def serve():
+            try:
+                receive(port=0, output=output, stop=stop, ready=ports.put, **options)
+            except BaseException as exc:
+                errors.put(exc)
+        worker = threading.Thread(target=serve, daemon=True)
+        worker.start()
+        try:
+            try:
+>               port = ports.get(timeout=5)
+                       ^^^^^^^^^^^^^^^^^^^^
+
+bionet/benchmark.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced8db5fa0>, block = True, timeout = 5
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_dashboard_transfer0')
+
+    def test_dashboard_transfer(tmp_path):
+        source = tmp_path/'synthetic.bin'; synthetic(source, 65537)
+        original = digest(source); completed = []
+>       with local_receiver('udp', tmp_path/'out', window_size=8, dashboard=True,
+                            on_complete=completed.append) as port:
+
+tests/test_phase2.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+bionet/benchmark.py:43: in local_receiver
+    raise errors.get()
+bionet/benchmark.py:33: in serve
+    receive(port=0, output=output, stop=stop, ready=ports.put, **options)
+bionet/receiver.py:35: in receive
+    with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_DGRAM: 2>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+----------------------------- Captured stderr call -----------------------------
+╭─────────────────── BioNet · receiver (local observations) ───────────────────╮
+│ Progress   0.00%  0/0 payload bytes          Elapsed 0.02 s                  │
+│ TX 0 B / RX 0 B (BioNet datagrams)           Current goodput 0.000 Mbps      │
+│ Total DATA 0 / acknowledged 0                Outstanding 0                   │
+│ Window base 0 / width 0                      Retransmissions N/A             │
+│ Simulated outbound drops 0                   Out-of-order arrivals N/A       │
+│                                                                              │
+│ A ACKed   P pending   L simulated drop   R retried   . unsent (first 32      │
+│ slots)                                                                       │
+│ Interrupted / failed | SHA-256: Not confirmed                                │
+╰──────────────────────────────────────────────────────────────────────────────╯
+____________________________ test_dashboard_failure ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_dashboard_failure0')
+
+    def test_dashboard_failure(tmp_path):
+        path = tmp_path/'empty'; path.touch()
+        with pytest.raises(TimeoutError), Dashboard(True) as display:
+            display.update(force=True, total=0)
+>           sender.send(path, port=1, retries=0, timeout=.01, loss=1, dashboard=True)
+
+tests/test_phase2.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:21: in send
+    with Dashboard(dashboard) as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_DGRAM: 2>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+----------------------------- Captured stderr call -----------------------------
+╭────────────────────────────── BioNet · sender ───────────────────────────────╮
+│ Progress   0.00%  0/0 payload bytes          Elapsed 0.00 s                  │
+│ TX 0 B / RX 0 B (BioNet datagrams)           Current goodput 0.000 Mbps      │
+│ Total DATA 0 / acknowledged 0                Outstanding 0                   │
+│ Window base 0 / width 0                      Retransmissions N/A             │
+│ Simulated outbound drops 0                   Out-of-order arrivals N/A       │
+│                                                                              │
+│ A ACKed   P pending   L simulated drop   R retried   . unsent (first 32      │
+│ slots)                                                                       │
+│ Interrupted / failed | SHA-256: Not confirmed                                │
+╰──────────────────────────────────────────────────────────────────────────────╯╭────────────────────────────── BioNet · sender ───────────────────────────────╮
+│ Progress   0.00%  0/0 payload bytes          Elapsed 0.00 s                  │
+│ TX 0 B / RX 0 B (BioNet datagrams)           Current goodput 0.000 Mbps      │
+│ Total DATA 0 / acknowledged 0                Outstanding 0                   │
+│ Window base 0 / width 0                      Retransmissions N/A             │
+│ Simulated outbound drops 0                   Out-of-order arrivals N/A       │
+│                                                                              │
+│ A ACKed   P pending   L simulated drop   R retried   . unsent (first 32      │
+│ slots)                                                                       │
+│ Interrupted / failed | SHA-256: Not confirmed                                │
+╰──────────────────────────────────────────────────────────────────────────────╯
+____________________________ test_benchmark_exports ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_benchmark_exports0')
+
+    def test_benchmark_exports(tmp_path):
+        rows = run(tmp_path, trials=2, sizes=(2048,), windows=(4,), losses=(0,), no_plots=True)
+>       assert len(rows) == 6 and all(r['success'] for r in rows)
+E       AssertionError: assert (6 == 6 and False)
+E        +  where 6 = len([{'success': False, 'sha256': False, 'error': '[Errno 1] Operation not permitted', 'experiment': 'comparison', ...}, {.....}, {'success': False, 'sha256': False, 'error': '[Errno 1] Operation not permitted', 'experiment': 'udp_sweep', ...}])
+E        +  and   False = all(<generator object test_benchmark_exports.<locals>.<genexpr> at 0x7fced94c41e0>)
+
+tests/test_phase2.py:61: AssertionError
+______________________ test_existing_partial_not_deleted _______________________
+
+protocol = 'udp'
+output = PosixPath('/tmp/pytest-of-agent/pytest-0/test_existing_partial_not_dele0')
+options = {'quiet': True}
+
+    @contextmanager
+    def local_receiver(protocol, output, **options):
+        stop = threading.Event(); ports = queue.Queue(); errors = queue.Queue()
+        receive = receiver.receive if protocol == 'udp' else tcp_baseline.receive
+        def serve():
+            try:
+                receive(port=0, output=output, stop=stop, ready=ports.put, **options)
+            except BaseException as exc:
+                errors.put(exc)
+        worker = threading.Thread(target=serve, daemon=True)
+        worker.start()
+        try:
+            try:
+>               port = ports.get(timeout=5)
+                       ^^^^^^^^^^^^^^^^^^^^
+
+bionet/benchmark.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <queue.Queue object at 0x7fced9092bd0>, block = True, timeout = 5
+
+    def get(self, block=True, timeout=None):
+        '''Remove and return an item from the queue.
+    
+        If optional args 'block' is true and 'timeout' is None (the default),
+        block if necessary until an item is available. If 'timeout' is
+        a non-negative number, it blocks at most 'timeout' seconds and raises
+        the Empty exception if no item was available within that time.
+        Otherwise ('block' is false), return an item if one is immediately
+        available, else raise the Empty exception ('timeout' is ignored
+        in that case).
+        '''
+        with self.not_empty:
+            if not block:
+                if not self._qsize():
+                    raise Empty
+            elif timeout is None:
+                while not self._qsize():
+                    self.not_empty.wait()
+            elif timeout < 0:
+                raise ValueError("'timeout' must be a non-negative number")
+            else:
+                endtime = time() + timeout
+                while not self._qsize():
+                    remaining = endtime - time()
+                    if remaining <= 0.0:
+>                       raise Empty
+E                       _queue.Empty
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/queue.py:179: Empty
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_existing_partial_not_dele0')
+
+    def test_existing_partial_not_deleted(tmp_path):
+        # An exclusive-create failure must not delete a file this session did not create.
+        from bionet.protocol import START, ERROR, decode
+        sid = bytes(16)
+        partial = tmp_path/('.'+sid.hex()+'.part'); partial.write_bytes(b'owned elsewhere')
+        m = dict(filename='new', size=0, chunk=1024, count=0, window=1, sha256='0'*64)
+>       with local_receiver('udp', tmp_path, quiet=True) as port:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase2.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+bionet/benchmark.py:43: in local_receiver
+    raise errors.get()
+bionet/benchmark.py:33: in serve
+    receive(port=0, output=output, stop=stop, ready=ports.put, **options)
+bionet/receiver.py:35: in receive
+    with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_DGRAM: 2>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py:233: PermissionError
+=============================== warnings summary ===============================
+../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14
+  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+tests/test_bionet.py::test_udp[0-0]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-1 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0-1]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-2 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0-1024]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-3 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0-1025]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-4 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0-1048576]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-5 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0.2-0]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-6 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0.2-1]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-7 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0.2-1024]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-8 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0.2-1025]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-9 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_udp[0.2-1048576]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-10 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_tcp
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-11 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/tcp_baseline.py", line 44, in receive
+      with socket.socket() as listener:
+           ^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_lost_controls[1]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-12 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_lost_controls[2]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-13 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_lost_controls[5]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-14 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_lost_controls[6]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-15 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_duplicate_data
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-16 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_interrupted_and_hash_failure[False]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-17 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_interrupted_and_hash_failure[True]
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-18 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/test_bionet.py::test_sequential_transfers
+  /workspace/BioNet/.venv/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-19 (receive)
+  
+  Traceback (most recent call last):
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/workspace/BioNet/bionet/receiver.py", line 35, in receive
+      with Dashboard(dashboard, role='receiver (local observations)') as display, socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/socket.py", line 233, in __init__
+      _socket.socket.__init__(self, family, type, proto, fileno)
+  PermissionError: [Errno 1] Operation not permitted
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_bionet.py::test_udp[0-0] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0-1] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0-1024] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0-1025] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0-1048576] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0.2-0] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0.2-1] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0.2-1024] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0.2-1025] - _queue.Empty
+FAILED tests/test_bionet.py::test_udp[0.2-1048576] - _queue.Empty
+FAILED tests/test_bionet.py::test_retry_exhaustion - PermissionError: [Errno ...
+FAILED tests/test_bionet.py::test_tcp - _queue.Empty
+FAILED tests/test_bionet.py::test_lost_controls[1] - _queue.Empty
+FAILED tests/test_bionet.py::test_lost_controls[2] - _queue.Empty
+FAILED tests/test_bionet.py::test_lost_controls[5] - _queue.Empty
+FAILED tests/test_bionet.py::test_lost_controls[6] - _queue.Empty
+FAILED tests/test_bionet.py::test_duplicate_data - _queue.Empty
+FAILED tests/test_bionet.py::test_interrupted_and_hash_failure[False] - Permi...
+FAILED tests/test_bionet.py::test_interrupted_and_hash_failure[True] - Permis...
+FAILED tests/test_bionet.py::test_sequential_transfers - _queue.Empty
+FAILED tests/test_phase2.py::test_actual_wire_counters - PermissionError: [Er...
+FAILED tests/test_phase2.py::test_dashboard_transfer - PermissionError: [Errn...
+FAILED tests/test_phase2.py::test_dashboard_failure - PermissionError: [Errno...
+FAILED tests/test_phase2.py::test_benchmark_exports - AssertionError: assert ...
+FAILED tests/test_phase2.py::test_existing_partial_not_deleted - PermissionEr...
+25 failed, 20 passed, 20 warnings in 91.33s (0:01:31)

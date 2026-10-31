@@ -64,3 +64,13 @@ count CRC-valid replies from its peer/session (including duplicate replies).
 Receiver monitoring counts accepted-session datagrams, excluding unrelated traffic;
 it does not estimate unseen sender drops. Retransmissions include DATA and control
 retries. TCP packet/retransmission counts are unavailable at the application layer.
+
+## Phase 3 validation details
+
+START/START_ACK/FIN/FIN_ACK use sequence zero. FIN, FIN_ACK and individual ACK
+carry no payload. Invalid control shapes are ignored. Duplicate START must repeat
+the original metadata bytes; conflicting metadata reports ERROR without resetting
+the active transfer. Invalid/out-of-window DATA does not refresh idle expiry.
+Matching repeated START and valid DATA do refresh it. Ordinary receiver file I/O
+failure aborts the session, removes owned partial output and sends ERROR when
+possible. This preserves the v1 format and successful Phase 2 behavior.

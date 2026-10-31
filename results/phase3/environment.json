@@ -1,0 +1,11 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "machine": "x86_64",
+  "packages": {
+    "pytest": "9.2.0",
+    "rich": "15.0.0",
+    "matplotlib": "3.10.8"
+  },
+  "base_commit": "31cd398840f830df963da91fb3808108f1f8cc8a"
+}

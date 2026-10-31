@@ -8,6 +8,7 @@ import statistics
 import sys
 import tempfile
 import threading
+import time
 from collections import defaultdict
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -112,6 +113,7 @@ def run(output='results/phase2', trials=3, sizes=(65536, 262144), windows=(8, 32
             path = Path(directory)/'synthetic.bin'; synthetic(path, size)
             rx = dict(window_size=window, loss=loss, seed=trial+100, quiet=True, on_complete=completed.append) if protocol == 'udp' else {}
             tx = dict(window_size=window, loss=loss, seed=trial, latency=latency) if protocol == 'udp' else {}
+            attempt_started = time.monotonic()
             try:
                 with local_receiver(protocol, Path(directory)/'out', **rx) as port:
                     send = sender.send if protocol == 'udp' else tcp_baseline.send
@@ -122,7 +124,7 @@ def run(output='results/phase2', trials=3, sizes=(65536, 262144), windows=(8, 32
                     result.update(receiver_simulated_drops=completed[0]['simulated_drops'],
                                   out_of_order=completed[0]['out_of_order'])
             except (OSError, RuntimeError, ValueError) as exc:
-                result.update(success=False, sha256=False, error=str(exc))
+                result.update(success=False, sha256=False, error=str(exc), failure_seconds=time.monotonic()-attempt_started)
             result.pop('session', None); result.pop('filename', None)
             rows.append(dict(result, experiment=experiment, protocol=protocol, size=size, window=window,
                              loss=loss, trial=trial, sender_seed=trial, receiver_seed=trial+100,
@@ -141,7 +143,10 @@ def plot(root):
     import matplotlib.pyplot as plt
     root = Path(root)
     with (root/'benchmark_results.csv').open() as stream:
-        rows = [r for r in csv.DictReader(stream) if r['success'] == 'True']
+        all_rows = list(csv.DictReader(stream))
+        rows = [r for r in all_rows if r['success'] == 'True']
+    failures = sum(r['success'] != 'True' for r in all_rows)
+    note = f'Successful trials plotted; {failures}/{len(all_rows)} total failures (see summary.csv)'
     sweep = [r for r in rows if r.get('experiment', 'udp_sweep') == 'udp_sweep']
     for x, y, filename, ylabel in [('loss','goodput_mbps','throughput_loss','Goodput (Mbps)'), ('loss','seconds','time_loss','Completion time (s)'), ('loss','retransmissions','retransmissions_loss','Retransmissions'), ('window','goodput_mbps','throughput_window','Goodput (Mbps)')]:
         fig, ax = plt.subplots()
@@ -158,7 +163,8 @@ def plot(root):
             ax.legend(fontsize=7)
         else:
             ax.text(.5, .5, 'No successful measurements', ha='center', transform=ax.transAxes)
-        fig.tight_layout(); fig.savefig(root/(filename+'.png')); plt.close(fig)
+        fig.text(.5, .01, note, ha='center', fontsize=7)
+        fig.tight_layout(rect=(0, .03, 1, 1)); fig.savefig(root/(filename+'.png')); plt.close(fig)
     comparison = [r for r in rows if r.get('experiment') == 'comparison']
     fig, axes = plt.subplots(1, 2, figsize=(11, 4))
     for ax, metric, label in zip(axes, ('goodput_mbps', 'seconds'), ('Goodput (Mbps)', 'Completion time (s)')):
@@ -174,4 +180,5 @@ def plot(root):
         if not groups:
             ax.text(.5, .5, 'No successful comparison measurements', ha='center', transform=ax.transAxes)
     fig.suptitle('Measured localhost TCP vs UDP; no artificial impairment; mean ± sample SD')
-    fig.tight_layout(); fig.savefig(root/'tcp_udp_comparison.png'); plt.close(fig)
+    fig.text(.5, .01, note, ha='center', fontsize=7)
+    fig.tight_layout(rect=(0, .03, 1, 1)); fig.savefig(root/'tcp_udp_comparison.png'); plt.close(fig)

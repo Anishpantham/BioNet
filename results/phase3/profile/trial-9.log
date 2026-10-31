@@ -1,0 +1,12 @@
+╭────────────────────────────── BioNet · sender ───────────────────────────────╮
+│ Progress 100.00%  1,048,576/1,048,576 payload     Elapsed 0.16 s             │
+│ bytes                                                                        │
+│ TX 1,107,941 B / RX 36,939 B (BioNet datagrams)   Current goodput 0.000 Mbps │
+│ Total DATA 1,024 / acknowledged 1,024             Outstanding 0              │
+│ Window base 1,024 / width 128                     Retransmissions 21         │
+│ Simulated outbound drops 0                        Out-of-order arrivals N/A  │
+│                                                                              │
+│ A ACKed   P pending   L simulated drop   R retried   . unsent (first 32      │
+│ slots)                                                                       │
+│ Complete | SHA-256: PASS                                                     │
+╰──────────────────────────────────────────────────────────────────────────────╯

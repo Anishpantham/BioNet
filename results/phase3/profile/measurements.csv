@@ -1,0 +1,15 @@
+acknowledged_packets,application_overhead_bytes,bytes_received,bytes_transmitted,dashboard,error,experiment,goodput_mbps,independent_sha256,packets_transmitted,peak_python_bytes,protocol,retransmissions,seconds,sha256,simulated_drops,size,success,total_packets,tracemalloc,trial
+1024,258484,36939,1270121,False,,memory,18.098620029976015,True,1200,2232616,udp,174,0.4634943429999794,True,0,1048576,True,1024,True,0
+,175,4,1048747,False,,memory,804.7108819463016,True,,2378832,tcp,,0.010424375000013697,True,,1048576,True,,True,0
+10240,2489778,368715,12606823,False,,memory,18.062879402414072,True,11895,2233672,udp,1653,4.644114492000028,True,0,10485760,True,10240,True,0
+,177,4,10485933,False,,memory,3090.353197200032,True,,2378814,tcp,,0.027144496000005347,True,,10485760,True,,True,0
+102400,25270160,3686475,126441285,False,,memory,17.60200747986528,True,119286,2233627,udp,16884,47.65710962000003,True,0,104857600,True,102400,True,0
+,179,4,104857775,False,,memory,3970.6831647924705,True,,2378816,tcp,,0.21126359499999126,True,,104857600,True,,True,0
+,,,,False,"Command '['/workspace/BioNet/.venv/bin/python', '-m', 'scripts.phase3_profile', '--worker', '--output', '/tmp/tmpih3ige2t/result.json', '--sizes', '1024', '--protocol', 'udp', '--trace']' timed out after 239.99998995500005 seconds",memory,,,,,udp,,,False,,1073741824,False,,True,0
+,181,4,1073742001,False,,memory,4899.843796011366,True,,2377757,tcp,,1.7531037620000234,True,,1073741824,True,,True,0
+1024,109024,36939,1120661,False,,dashboard,60.92715489602367,True,1059,,udp,33,0.13768258200002492,True,0,1048576,True,1024,False,0
+1024,96304,36939,1107941,True,,dashboard,51.91143634968902,True,1047,,udp,21,0.16159460400001535,True,0,1048576,True,1024,False,0
+1024,74044,36939,1085681,True,,dashboard,140.445715738476,True,1026,,udp,0,0.059728471999960675,True,0,1048576,True,1024,False,1
+1024,93124,36939,1104761,False,,dashboard,47.477487917944394,True,1044,,udp,18,0.17668601200000467,True,0,1048576,True,1024,False,1
+1024,146124,36939,1157761,False,,dashboard,19.592358442833394,True,1094,,udp,68,0.4281571320000239,True,0,1048576,True,1024,False,2
+1024,74044,36939,1085681,True,,dashboard,137.77143299907678,True,1026,,udp,0,0.060887862000072346,True,0,1048576,True,1024,False,2

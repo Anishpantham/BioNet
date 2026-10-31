@@ -12,12 +12,13 @@ class Channel:
         self.rng = random.Random(seed)
         self.queue = []
         self.sent = self.drops = self.counter = 0
+        self.bytes_sent = self.packets_sent = 0
 
     def send(self, packet, address):
         self.sent += 1
         if self.rng.random() < self.loss:
             self.drops += 1
-            return
+            return False
         if self.rng.random() < self.corruption:
             packet = packet[:-1] + bytes([packet[-1] ^ 1])
         delay = max(0, self.latency + self.rng.uniform(-self.jitter, self.jitter))
@@ -28,8 +29,11 @@ class Channel:
             raise RuntimeError('scheduler resource limit')
         heapq.heappush(self.queue, (time.monotonic() + delay, self.counter, packet, address))
         self.flush()
+        return True
 
     def flush(self):
         while self.queue and self.queue[0][0] <= time.monotonic():
             _, _, packet, address = heapq.heappop(self.queue)
             self.sock.sendto(packet, address)
+            self.bytes_sent += len(packet)
+            self.packets_sent += 1

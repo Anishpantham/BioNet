@@ -8,6 +8,7 @@ import uuid
 from pathlib import Path
 from .integrity import digest
 from .receiver import metadata
+from .protocol import MAX_FILE_SIZE
 
 def exact(sock, n):
     result = bytearray()
@@ -20,16 +21,23 @@ def exact(sock, n):
 
 def send(file, host='127.0.0.1', port=9001):
     path = Path(file); size = path.stat().st_size
+    if size > MAX_FILE_SIZE:
+        raise ValueError('file exceeds supported 1 TiB limit')
     m = dict(filename=path.name, size=size, chunk=1024, count=(size+1023)//1024, window=1, sha256=digest(path))
     payload = json.dumps(m).encode(); start = time.monotonic()
     with socket.create_connection((host, port), timeout=30) as sock, path.open('rb') as stream:
         sock.sendall(struct.pack('!I', len(payload)) + payload)
-        for chunk in iter(lambda: stream.read(65536), b''):
-            sock.sendall(chunk)
+        remaining = size
+        while remaining:
+            chunk = stream.read(min(65536, remaining))
+            if not chunk:
+                raise OSError('source shortened during transfer')
+            sock.sendall(chunk); remaining -= len(chunk)
         if exact(sock, 4) != b'PASS':
             raise RuntimeError('receiver rejected file')
     elapsed = time.monotonic() - start
-    return dict(seconds=elapsed, goodput_mbps=size*8/elapsed/1e6, success=True, sha256=True)
+    return dict(size=size, bytes_transmitted=size+4+len(payload), bytes_received=4,
+                application_overhead_bytes=len(payload)+8, seconds=elapsed, goodput_mbps=size*8/elapsed/1e6, success=True, sha256=True)
 
 def receive(host='127.0.0.1', port=9001, output='received', stop=None, ready=None):
     root = Path(output); root.mkdir(parents=True, exist_ok=True)

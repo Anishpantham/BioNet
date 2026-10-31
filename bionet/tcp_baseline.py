@@ -52,6 +52,7 @@ def receive(host='127.0.0.1', port=9001, output='received', stop=None, ready=Non
             except socket.timeout:
                 continue
             temp = root / ('.' + uuid.uuid4().hex + '.part')
+            owned_temp = False
             with sock:
                 sock.settimeout(10)
                 try:
@@ -60,6 +61,7 @@ def receive(host='127.0.0.1', port=9001, output='received', stop=None, ready=Non
                         raise ValueError('metadata too large')
                     m = metadata(exact(sock, length), 1 << 40)
                     with temp.open('xb') as stream:
+                        owned_temp = True
                         remaining = m['size']
                         while remaining:
                             data = exact(sock, min(65536, remaining)); stream.write(data); remaining -= len(data)
@@ -73,4 +75,5 @@ def receive(host='127.0.0.1', port=9001, output='received', stop=None, ready=Non
                     except OSError:
                         pass
                 finally:
-                    temp.unlink(missing_ok=True)
+                    if owned_temp:
+                        temp.unlink(missing_ok=True)

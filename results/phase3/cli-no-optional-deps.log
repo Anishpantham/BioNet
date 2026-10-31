@@ -1,0 +1,10 @@
+usage: __main__.py [-h]
+                   {sender,receiver,tcp-sender,tcp-receiver,benchmark} ...
+
+BioNet reliable file transmission
+
+positional arguments:
+  {sender,receiver,tcp-sender,tcp-receiver,benchmark}
+
+options:
+  -h, --help            show this help message and exit

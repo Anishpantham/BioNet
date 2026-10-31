@@ -7,7 +7,7 @@ HEADER = struct.Struct('!4sBB16sQH')
 START, START_ACK, DATA, ACK, FIN, FIN_ACK, ERROR = range(1, 8)
 
 def encode(kind, session, seq=0, payload=b''):
-    if not 0 <= seq <= MAX_SEQUENCE or len(payload) > 1200 or len(session) != 16 or kind not in range(1, 8):
+    if type(seq) is not int or type(kind) is not int or not 0 <= seq <= MAX_SEQUENCE or len(payload) > 1200 or len(session) != 16 or kind not in range(1, 8):
         raise ValueError('invalid packet')
     body = HEADER.pack(b'BNET', 1, kind, session, seq, len(payload)) + payload
     return body + struct.pack('!I', zlib.crc32(body))

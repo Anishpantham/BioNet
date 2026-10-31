@@ -1,0 +1,427 @@
+.F.FF..FFFFFFFFFF.FFF                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_metadata_bounded_parser[payload1] ____________________
+
+payload = b'{"filename": "safe.bin", "size": 0, "chunk": 1024, "count": 0, "window": 8, "sha256": "e3b0c44298fc1c149afbf4c8996fb...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}'
+shallow_recursion = None
+
+    @pytest.mark.parametrize('payload', [b'['*1100+b']', meta(extra='x'*1200)])
+    def test_metadata_bounded_parser(payload, shallow_recursion):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:42: Failed
+___________________________ test_sequence_type[True] ___________________________
+
+seq = True
+
+    @pytest.mark.parametrize('seq', [True, 1.5, -1, 1 << 64])
+    def test_sequence_type(seq):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:56: Failed
+___________________________ test_sequence_type[1.5] ____________________________
+
+seq = 1.5
+
+    @pytest.mark.parametrize('seq', [True, 1.5, -1, 1 << 64])
+    def test_sequence_type(seq):
+        with pytest.raises(ValueError):
+>           encode(DATA, bytes(16), seq)
+
+tests/test_phase3_regressions.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = 3
+session = b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+seq = 1.5, payload = b''
+
+    def encode(kind, session, seq=0, payload=b''):
+        if not 0 <= seq <= MAX_SEQUENCE or len(payload) > 1200 or len(session) != 16 or kind not in range(1, 8):
+            raise ValueError('invalid packet')
+>       body = HEADER.pack(b'BNET', 1, kind, session, seq, len(payload)) + payload
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       struct.error: required argument is not an integer
+
+bionet/protocol.py:12: error
+______________________ test_finite_scheduler[nan-latency] ______________________
+
+field = 'latency', value = nan
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:64: Failed
+______________________ test_finite_scheduler[nan-jitter] _______________________
+
+field = 'jitter', value = nan
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:64: Failed
+______________________ test_finite_scheduler[inf-latency] ______________________
+
+field = 'latency', value = inf
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:64: Failed
+______________________ test_finite_scheduler[inf-jitter] _______________________
+
+field = 'jitter', value = inf
+
+    @pytest.mark.parametrize('field', ['latency', 'jitter'])
+    @pytest.mark.parametrize('value', [float('nan'), float('inf')])
+    def test_finite_scheduler(field, value):
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_phase3_regressions.py:64: Failed
+__________ test_sender_rejects_invalid_limits_before_io[timeout-nan] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li0')
+field = 'timeout', value = nan
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li0/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li0/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+__________ test_sender_rejects_invalid_limits_before_io[timeout-inf] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li1')
+field = 'timeout', value = inf
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li1/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li1/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+________ test_sender_rejects_invalid_limits_before_io[window_size-1.5] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li2')
+field = 'window_size', value = 1.5
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li2/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li2/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+__________ test_sender_rejects_invalid_limits_before_io[retries-1.5] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li3')
+field = 'retries', value = 1.5
+
+    @pytest.mark.parametrize('field,value', [('timeout', float('nan')), ('timeout', float('inf')),
+                                            ('window_size', 1.5), ('retries', 1.5)])
+    def test_sender_rejects_invalid_limits_before_io(tmp_path, field, value):
+        with pytest.raises(ValueError):
+>           sender.send(tmp_path/'missing', **{field:value})
+
+tests/test_phase3_regressions.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+bionet/sender.py:14: in send
+    path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
+                              ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li3/missing')
+follow_symlinks = True
+
+    def stat(self, *, follow_symlinks=True):
+        """
+        Return the result of the stat() system call on this path, like
+        os.stat() does.
+        """
+>       return os.stat(self, follow_symlinks=follow_symlinks)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-3/test_sender_rejects_invalid_li3/missing'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:840: FileNotFoundError
+_______________ test_udp_disk_write_failure_keeps_service_alive ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_udp_disk_write_failure_ke0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fae7d67f4a0>
+
+    def test_udp_disk_write_failure_keeps_service_alive(tmp_path, monkeypatch):
+        original = Path.open
+        class FailingWriter:
+            def __init__(self, stream): self.stream = stream
+            def write(self, data): raise OSError('injected ENOSPC')
+            def close(self): self.stream.close()
+            @property
+            def closed(self): return self.stream.closed
+        def opened(path, mode='r', *args, **kwargs):
+            stream = original(path, mode, *args, **kwargs)
+            return FailingWriter(stream) if mode == 'xb' and path.suffix == '.part' else stream
+        monkeypatch.setattr(Path, 'open', opened)
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sid = bytes(16)
+            sock.send(encode(START, sid, payload=meta(b'x')))
+            assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(DATA, sid, payload=b'x'))
+            # An ACK can precede the error; publication must never be confirmed.
+            answer = decode(sock.recv(2048))
+>           if answer[0] == ACK: answer = decode(sock.recv(2048))
+                                                 ^^^^^^^^^^^^^^^
+E           TimeoutError: timed out
+
+tests/test_phase3_regressions.py:94: TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_udp_disk_write_failure_ke0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fae7d67f4a0>
+
+    def test_udp_disk_write_failure_keeps_service_alive(tmp_path, monkeypatch):
+        original = Path.open
+        class FailingWriter:
+            def __init__(self, stream): self.stream = stream
+            def write(self, data): raise OSError('injected ENOSPC')
+            def close(self): self.stream.close()
+            @property
+            def closed(self): return self.stream.closed
+        def opened(path, mode='r', *args, **kwargs):
+            stream = original(path, mode, *args, **kwargs)
+            return FailingWriter(stream) if mode == 'xb' and path.suffix == '.part' else stream
+        monkeypatch.setattr(Path, 'open', opened)
+>       with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase3_regressions.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py:158: in __exit__
+    self.gen.throw(value)
+bionet/benchmark.py:51: in local_receiver
+    raise errors.get()
+bionet/benchmark.py:33: in serve
+    receive(port=0, output=output, stop=stop, ready=ports.put, **options)
+bionet/receiver.py:103: in receive
+    stream.write(data); hasher.update(data); written += len(data); base += 1
+    ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_phase3_regressions.test_udp_disk_write_failure_keeps_service_alive.<locals>.FailingWriter object at 0x7fae7d4e6390>
+data = b'x'
+
+>   def write(self, data): raise OSError('injected ENOSPC')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: injected ENOSPC
+
+tests/test_phase3_regressions.py:79: OSError
+___________________ test_tcp_does_not_delete_unowned_partial ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_tcp_does_not_delete_unown0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fae7d557c20>
+
+    def test_tcp_does_not_delete_unowned_partial(tmp_path, monkeypatch):
+        fixed = uuid.UUID(int=0)
+        monkeypatch.setattr(tcp_baseline.uuid, 'uuid4', lambda: fixed)
+        partial = tmp_path/('.'+fixed.hex+'.part'); partial.write_bytes(b'preexisting')
+        with local_receiver('tcp', tmp_path) as port:
+            with socket.create_connection(('127.0.0.1', port), timeout=1) as sock:
+                payload = meta(); sock.sendall(struct.pack('!I', len(payload))+payload)
+                assert tcp_baseline.exact(sock, 4) == b'FAIL'
+>       assert partial.read_bytes() == b'preexisting'
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase3_regressions.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-3/test_tcp_does_not_delete_unown0/.00000000000000000000000000000000.part')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-3/test_tcp_does_not_delete_unown0/.00000000000000000000000000000000.part'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+______________ test_udp_releases_temp_ownership_after_completion _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_udp_releases_temp_ownersh0')
+
+    def test_udp_releases_temp_ownership_after_completion(tmp_path):
+        sid = bytes(16)
+        partial = tmp_path/('.'+sid.hex()+'.part')
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sock.send(encode(START, sid, payload=meta()))
+            assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(FIN, sid)); assert decode(sock.recv(2048))[0] == FIN_ACK
+            partial.write_bytes(b'new owner')
+>       assert partial.read_bytes() == b'new owner'
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_phase3_regressions.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-agent/pytest-3/test_udp_releases_temp_ownersh0/.00000000000000000000000000000000.part')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-agent/pytest-3/test_udp_releases_temp_ownersh0/.00000000000000000000000000000000.part'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1013: FileNotFoundError
+___________________ test_nonzero_control_sequence_ignored[1] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_nonzero_control_sequence_0')
+kind = 1
+
+    @pytest.mark.parametrize('kind', [START, FIN])
+    def test_nonzero_control_sequence_ignored(tmp_path, kind):
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sid = bytes(16)
+            if kind == FIN:
+                sock.send(encode(START, sid, payload=meta()))
+                assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(kind, sid, seq=99, payload=meta() if kind == START else b''))
+>           with pytest.raises(socket.timeout): sock.recv(2048)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE TimeoutError
+
+tests/test_phase3_regressions.py:141: Failed
+___________________ test_nonzero_control_sequence_ignored[5] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_nonzero_control_sequence_1')
+kind = 5
+
+    @pytest.mark.parametrize('kind', [START, FIN])
+    def test_nonzero_control_sequence_ignored(tmp_path, kind):
+        with local_receiver('udp', tmp_path, quiet=True) as port, udp_peer(port) as sock:
+            sid = bytes(16)
+            if kind == FIN:
+                sock.send(encode(START, sid, payload=meta()))
+                assert decode(sock.recv(2048))[0] == START_ACK
+            sock.send(encode(kind, sid, seq=99, payload=meta() if kind == START else b''))
+>           with pytest.raises(socket.timeout): sock.recv(2048)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE TimeoutError
+
+tests/test_phase3_regressions.py:141: Failed
+=========================== short test summary info ============================
+FAILED tests/test_phase3_regressions.py::test_metadata_bounded_parser[payload1]
+FAILED tests/test_phase3_regressions.py::test_sequence_type[True] - Failed: D...
+FAILED tests/test_phase3_regressions.py::test_sequence_type[1.5] - struct.err...
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[nan-latency]
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[nan-jitter] - ...
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[inf-latency]
+FAILED tests/test_phase3_regressions.py::test_finite_scheduler[inf-jitter] - ...
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[timeout-nan]
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[timeout-inf]
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[window_size-1.5]
+FAILED tests/test_phase3_regressions.py::test_sender_rejects_invalid_limits_before_io[retries-1.5]
+FAILED tests/test_phase3_regressions.py::test_udp_disk_write_failure_keeps_service_alive
+FAILED tests/test_phase3_regressions.py::test_tcp_does_not_delete_unowned_partial
+FAILED tests/test_phase3_regressions.py::test_udp_releases_temp_ownership_after_completion
+FAILED tests/test_phase3_regressions.py::test_nonzero_control_sequence_ignored[1]
+FAILED tests/test_phase3_regressions.py::test_nonzero_control_sequence_ignored[5]
+16 failed, 5 passed in 0.39s

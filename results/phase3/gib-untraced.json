@@ -1,0 +1,22 @@
+{
+  "bytes_transmitted": 1111490806,
+  "bytes_received": 37748810,
+  "application_overhead_bytes": 75497792,
+  "total_packets": 1048576,
+  "acknowledged_packets": 1048576,
+  "size": 1073741824,
+  "seconds": 47.565323948000014,
+  "goodput_mbps": 180.59237021891832,
+  "packets_transmitted": 1048578,
+  "retransmissions": 0,
+  "simulated_drops": 0,
+  "success": true,
+  "sha256": true,
+  "independent_sha256": true,
+  "protocol": "udp",
+  "dashboard": false,
+  "tracemalloc": false,
+  "window": 32,
+  "experiment": "untraced_gib",
+  "timeout": 180
+}

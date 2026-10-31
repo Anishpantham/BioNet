@@ -1,4 +1,5 @@
 import json
+import math
 import socket
 import time
 import uuid
@@ -9,7 +10,7 @@ from .impairment import Channel
 from .dashboard import Dashboard
 
 def send(file, host='127.0.0.1', port=9000, window_size=32, chunk_size=1024, timeout=.1, retries=50, verbose=False, dashboard=False, **impairment):
-    if not 1 <= window_size <= 4096 or not 1 <= chunk_size <= 1024 or timeout <= 0 or retries < 0:
+    if any(type(x) is not int for x in (window_size, chunk_size, retries)) or not math.isfinite(timeout) or not 1 <= window_size <= 4096 or not 1 <= chunk_size <= 1024 or timeout <= 0 or retries < 0:
         raise ValueError('invalid sender limits')
     path = Path(file); size = path.stat().st_size; sid = uuid.uuid4().bytes
     count = (size + chunk_size - 1) // chunk_size
@@ -45,7 +46,7 @@ def send(file, host='127.0.0.1', port=9000, window_size=32, chunk_size=1024, tim
                 deadline = time.monotonic() + timeout
                 while time.monotonic() < deadline:
                     answer = poll()
-                    if answer and answer[0] == expected:
+                    if answer and answer[0] == expected and answer[1] == 0 and (expected != FIN_ACK or not answer[2]):
                         return answer[2]
             raise TimeoutError('control retry exhaustion')
         display.update(force=True, status='START negotiation', size=size, total=count)
@@ -66,7 +67,7 @@ def send(file, host='127.0.0.1', port=9000, window_size=32, chunk_size=1024, tim
                     pending[next_seq] = [packet, time.monotonic(), 0]
                     next_seq += 1
                 answer = poll()
-                if answer and answer[0] == ACK and answer[1] in pending:
+                if answer and answer[0] == ACK and not answer[2] and answer[1] in pending:
                     seq = answer[1]
                     done += len(pending[seq][0]) - HEADER.size - 4
                     acknowledged += 1

@@ -1,0 +1,10 @@
+usage: validate_macos.py [-h] [--output OUTPUT] [--gib]
+
+Local-only Apple Silicon validation. Never opens the real biometric dataset.
+Install with python3.12 -m pip install -e '.[dev]', then run: python3.12 -m
+scripts.validate_macos --output results/macos-local
+
+options:
+  -h, --help       show this help message and exit
+  --output OUTPUT
+  --gib            also profile a 1 GiB synthetic file

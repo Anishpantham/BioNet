@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/BioNet/.venv/bin/python",
+    "-m",
+    "scripts.phase3_profile",
+    "--output",
+    "/workspace/work/tmpo3b3l_jq/evidence",
+    "--sizes",
+    "1",
+    "--timeout",
+    ".2"
+  ],
+  "returncode": 1,
+  "expected_failure": true,
+  "temporary_directory_empty": true,
+  "failures": 6
+}

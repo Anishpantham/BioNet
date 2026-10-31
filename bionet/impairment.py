@@ -1,11 +1,12 @@
 """Nonblocking, seeded outbound scheduling on real UDP sockets."""
 import heapq
+import math
 import random
 import time
 
 class Channel:
     def __init__(self, sock, loss=0, latency=0, jitter=0, reorder=0, corruption=0, seed=1):
-        if any(not 0 <= x <= 1 for x in (loss, reorder, corruption)) or min(latency, jitter) < 0:
+        if any(not math.isfinite(x) for x in (loss, latency, jitter, reorder, corruption)) or any(not 0 <= x <= 1 for x in (loss, reorder, corruption)) or min(latency, jitter) < 0:
             raise ValueError('invalid impairment')
         self.sock, self.loss, self.latency, self.jitter = sock, loss, latency, jitter
         self.reorder, self.corruption = reorder, corruption

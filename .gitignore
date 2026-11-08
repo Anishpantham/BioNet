@@ -227,3 +227,13 @@ received/
 
 # Local Phase 2 scratch work
 work/
+
+# macOS metadata
+.DS_Store
+
+# Local biometric datasets and reconstructed copies
+received-biometric/
+25BCS126.zip
+
+# Generated Matplotlib font cache
+results/macos-local/matplotlib-cache/

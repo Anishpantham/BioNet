@@ -1,0 +1,16 @@
+{
+  "python": "3.12.8 (v3.12.8:2dc476bcb91, Dec  3 2024, 14:43:19) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "sizes_mib": [
+    1,
+    10,
+    100
+  ],
+  "per_transfer_timeout": 240,
+  "window": 128,
+  "loss": 0,
+  "payload": "bytes 0..255",
+  "memory": "tracemalloc includes both endpoints and streaming hashes, excludes native/kernel allocations",
+  "timing": "sender result; source pre-hash excluded; traced timings are instrumented",
+  "overhead": "3 alternating dashboard off/on UDP pairs, 1 MiB, stderr redirected, NO_COLOR=1"
+}

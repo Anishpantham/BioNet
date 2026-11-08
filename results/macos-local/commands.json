@@ -1,0 +1,53 @@
+[
+  {
+    "name": "tests",
+    "command": [
+      "/Users/anishpantham/vscode/CN Project/BioNet/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "--junitxml=/Users/anishpantham/vscode/CN Project/BioNet/results/macos-local/tests.xml"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "benchmark",
+    "command": [
+      "/Users/anishpantham/vscode/CN Project/BioNet/.venv/bin/python",
+      "-m",
+      "bionet",
+      "benchmark",
+      "--output",
+      "/Users/anishpantham/vscode/CN Project/BioNet/results/macos-local/benchmark",
+      "--sizes",
+      "16384",
+      "65536",
+      "--windows",
+      "8",
+      "32",
+      "--losses",
+      "0",
+      ".1",
+      ".4",
+      "--trials",
+      "3"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "profile",
+    "command": [
+      "/Users/anishpantham/vscode/CN Project/BioNet/.venv/bin/python",
+      "-m",
+      "scripts.phase3_profile",
+      "--output",
+      "/Users/anishpantham/vscode/CN Project/BioNet/results/macos-local/profile",
+      "--sizes",
+      "1",
+      "10",
+      "100"
+    ],
+    "returncode": 0
+  }
+]

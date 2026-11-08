@@ -1,3 +1,5 @@
+> **Final validation update (9 November 2026):** The actual 2.77 GB biometric ZIP has now been transmitted successfully over localhost UDP. Sender and receiver SHA-256 checks passed, and independent byte-for-byte comparison passed. See [Final Biometric Validation](FINAL_BIOMETRIC_VALIDATION.md) and [Final Two-Page Report](submission/BioNet_Two_Page_Technical_Report.pdf). Statements below describing the real-data demonstration as pending reflect the earlier project phase.
+
 # BioNet: Reliable File Transmission Using Selective Repeat ARQ over UDP
 *Two-page report draft: approximately 650 words; use 10–11 pt, one small architecture
 figure and one results table. Final PDF pagination remains to be checked.*
